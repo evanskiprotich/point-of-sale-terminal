@@ -5,13 +5,6 @@ Date :06.10.2022
 """
 import json
 
-with open('customers.json', 'r') as f:
-  data = json.load(f)
-
-
-#pprint.pprint(data)
-
-customers = data.get('customers', [])
 
 def customer():
     try:
@@ -29,78 +22,109 @@ def customer():
         print("Starting a new customers list!")
         customersList = []
 
+    def view_data():
+        print('Name\t\tPhone')
+        print('-' * 50)
+        f = open('customers.json', 'r')
+        customers = json.load(f)
+        for customer in customers:
+            print(f'{customer.get("name")}\t\t{customer.get("phone")}')
+        print('-' * 50)
+
+    def add_data():
+
+        f = open('customers.json', 'r')
+        customers_add = json.load(f)
+        item_data = {
+            "name": input("Name of the Customer: >> "),
+            "phone": input("Phone Number of the Customer: >> ")
+        }
+
+        customers_add.append(item_data)
+
+        with open("customers.json", 'w') as json_file:
+            json.dump(customers_add, json_file, indent=4)
+
+    def edit_data():
+        view_data()
+        new_data = []
+        f = open('customers.json', 'r')
+        customers_edit = json.load(f)
+        data_length = len(customers_edit) - 1
+        print("Which Index Number to edit")
+        edit_option = input(f"select a number 0-{data_length}: >> ")
+        i = 0
+        for entry in customers_edit:
+            if i == int(edit_option):
+                customers_name = entry['name']
+                customers_phone = entry['phone']
+                print(f"Current Name: {customers_name}")
+                customers_name = input("What would you like the new name to be: ")
+                print(f"Current Phone : {customers_phone}")
+                customers_phone = input("What would you like the new phone to be: ")
+                new_data.append({"name": customers_name, "phone": customers_phone})
+                i += 1
+            else:
+                new_data.append(entry)
+                i = i + 1
+        with open("customers.json", 'w') as f:
+            json.dump(new_data, f, indent=4)
+
+    def delete_data():
+        view_data()
+        new_data = []
+        f = open('customers.json', 'r')
+        customers_delete = json.load(f)
+        data_length = len(customers_delete) - 1
+        print("Which Index Number to Delete")
+        delete_option = input(f"select a number 0-{data_length}: >> ")
+        i = 0
+        for entry in customers_delete:
+            if i == int(delete_option):
+                pass
+                i += 1
+            else:
+                new_data.append(entry)
+                i = i + 1
+        with open("customers.json", 'w') as f:
+            json.dump(new_data, f, indent=4)
+
     choice = 0
     while choice != 6:
         print('')
-        print("-"*50)
-        print("****** Customers Menu Section ********")
-        print("-"*50)
+        print("-" * 50)
+        print("******* Customers Menu Section *********")
+        print("-" * 50)
         print('')
-        print("1) Create | Add a customer")
-        print("2) Lookup a customer")
-        print("3) Read | Display customers")
-        print("4) Update a customer")
-        print("5) Delete a customer")
-        print("6) Quit")
+        print("1) View | Read Customers")
+        print("2) Add | Create a Customer")
+        print("3) Delete a Customer")
+        print("4) Update a Customer")
+        print("5) Quit")
         choice = int(input())
 
         if choice == 1:
-            print("Adding a customer......")
-            name = input("Enter the name of the customer >>>")
-            phone = input("Enter the phone of the customer >>>")
-            customersList.append([name, phone])
-
-            customers.append({
-              'id': len(customers) + 1,
-              'name': name,
-              'phone': phone,
-            })
-
-            data['customers'] = customers
-            with open('customers.json', 'w') as f:
-              json.dump(data, f)
-            print('*****Added Successfully......*****')
-            print("-"*50)
+            view_data()
+            print("-" * 50)
 
         elif choice == 2:
-            print("Looking up for a customer...")
-            keyword = input("Enter Search Term: ")
-            for customer in customers:
-                if keyword in customer:
-                    print(customer)
-                    print("-"*50)
+            print("Adding a customer......")
+            add_data()
+            print('*****Added Successfully......*****')
+            print("-" * 50)
 
         elif choice == 3:
-          print('ID\tName\t\tPhone')
-          print('-'*50)
-          for custom in customers:
-            print(f'{custom.get("id")}\t{custom.get("name")}\t{custom.get("phone")}')
-          print('-'*50)
+            print("Deleting a customer...")
+            delete_data()
+            print('*****Deleted Successfully......*****')
+            print("-" * 50)
 
         elif choice == 4:
             print("Updating customer details...")
-            item_id = int(input('Enter item Id: '))
-            #name = input('Give new name: ')
-            new_phone = input('Give new phone: ')
-            for i, customer in enumerate(customers):
-                if customer['id'] == item_id:
-                    #customer[i]['name'].append(name)
-                    customer[i]['phone'].append(new_phone)
-                    break
-                print('Changes made to customer....')
+            edit_data()
+            print('*****Updated Successfully......*****')
+            print("-" * 50)
 
         elif choice == 5:
-            print("Deleting a customer...")
-            
-
-        elif choice == 6:
-            data['items'] = customers
-            with open('customers.json', 'w') as f:
-                json.dump(data, f)
             print("Quitting Program.....")
-    print("Program Terminated!")
-
-
-
-
-
+            break

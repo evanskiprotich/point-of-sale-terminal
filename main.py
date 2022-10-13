@@ -1,15 +1,14 @@
 from datetime import datetime
 from customers import customer
 from products import product
-from purchase import purchaseSystem
-import sys
+
 
 def main():
     print('')
-    print('-'*50)
-    msg = '**** WELCOME TO EK POINT OF SALE SYSTEM ****'
+    print('-' * 50)
+    msg = '**** WELCOME TO OUR POINT OF SALE SYSTEM ****'
     print(msg)
-    print('-'*50)
+    print('-' * 50)
 
     # datetime object containing current date and time
     now = datetime.now()
@@ -21,13 +20,13 @@ def main():
     menu = 0
     while menu != 5:
         print('')
-        print('-'*50)
-        print('Please Select a Menu Option...')
-        print("1) Customers")
-        print("2) Products")
-        print("3) Purchase")
+        print('-' * 50)
+        print('Please Select a Menu Option You Want to Access...')
+        print("1) Customers Details")
+        print("2) Products Details")
+        print("3) Go To Shopping")
         print("0) Quit")
-        print('-'*50)
+        print('-' * 50)
         menu = int(input())
 
         if menu == 1:
@@ -39,14 +38,12 @@ def main():
             product()
 
         elif menu == 3:
-            print('Opening purchase menu.....')
-            a = purchaseSystem()
-            while 1:
-                a.purchase()
+            print('Opening shopping menu.....')
+
 
         elif menu == 0:
             print("Quitting Program.....")
-        
+            break
     print("Program Terminated!")
 
 

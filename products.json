@@ -1,1 +1,57 @@
-{"products": [{"id": 1, "name": "Chicken Biryani", "price": 200}, {"id": 2, "name": "Chicken Kabab", "price": 150}, {"id": 3, "name": "Paneer Biryani", "price": 180}, {"id": 4, "name": "Veg Platter", "price": 150}, {"id": 5, "name": "Ice Creame", "price": 100}, {"id": 6, "name": "Sweet Lassi", "price": 80}, {"id": 7, "name": "Gulab Jamoon", "price": 120}, {"id": 8, "name": "Mutton Biryani", "price": 220}, {"id": 9, "name": "Veg Pulav", "price": 120}, {"id": 10, "name": "Softdrinks", "price": 30}, {"id": 11, "name": "computer", "price": "500"}, {"id": 12, "name": "monitor", "price": "350"}]}
+[
+    {
+        "code": "C1",
+        "name": "Chickenjoy",
+        "price": 89
+    },
+    {
+        "code": "C2",
+        "name": "Chickenjoy w/ Spaghetti",
+        "price": 100
+    },
+    {
+        "code": "C3",
+        "name": "Chickenjoy w/ Fries",
+        "price": 96
+    },
+    {
+        "code": "B1",
+        "name": "Burgersteak",
+        "price": 90
+    },
+    {
+        "code": "B2",
+        "name": "Burgersteak w/ Lumpia",
+        "price": 110
+    },
+    {
+        "code": "B3",
+        "name": "Burgersteak w/ Fries",
+        "price": 100
+    },
+    {
+        "code": "Y1",
+        "name": "Yumburger",
+        "price": 20
+    },
+    {
+        "code": "Y2",
+        "name": "Yumburger w/ Fries",
+        "price": 50
+    },
+    {
+        "code": "S1",
+        "name": "Spaghetti",
+        "price": 60
+    },
+    {
+        "code": "S2",
+        "name": "Spaghetti w/ Fries",
+        "price": 80
+    },
+    {
+        "code": "D1",
+        "name": "Soft Drink",
+        "price": 150
+    }
+]

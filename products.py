@@ -1,96 +1,110 @@
 import json
 
-with open('products.json', 'r') as f:
-  data = json.load(f)
-
-
-#pprint.pprint(data)
-
-products = data.get('products', [])
-
 
 def product():
-    try:
-        # initialize product list
-        productsList = []
-        infile = open("products.json", "r")
-        line = infile.readline()
-        while line:
-            productsList.append(line.rstrip("\n").split(","))
-            line = infile.readline()
-        infile.close()
-
-    except FileNotFoundError:
-        print("the <productList.json> file is not found ")
-        print("Starting a new product list!")
-        productsList = []
-
-    choice = 0
-    while choice != 6:
+    def choices():
         print('')
-        print("-"*50)
+        print("-" * 50)
         print("******* Products Menu Section *********")
-        print("-"*50)
+        print("-" * 50)
         print('')
-        print("1) Create | Add a product")
-        print("2) Lookup a product")
-        print("3) Read | Display products")
+        print("1) View | Read Products")
+        print("2) Add | Create a Product")
+        print("3) Delete a Product")
         print("4) Update a product")
-        print("5) Delete a product")
-        print("6) Quit")
+        print("5) Quit")
 
-        choice = int(input())
+    def view_data():
+        print('Code\tName\t\tPrice')
+        print('-' * 50)
+        f = open('products.json', 'r')
+        products = json.load(f)
+        for product in products:
+            print(f'{product.get("code")}\t{product.get("name")}\t\t{product.get("price")}')
+        print('-' * 50)
 
+    def add_data():
+
+        f = open('products.json', 'r')
+        products_add = json.load(f)
+        item_data = {
+            "code": input("Code of Product: >> "),
+            "name": input("Name of Product: >> "),
+            "price": int(input("Price of Product: >> "))
+        }
+
+        products_add.append(item_data)
+
+        with open("products.json", 'w') as json_file:
+            json.dump(products_add, json_file, indent=4)
+
+    def delete_data():
+        view_data()
+        new_data = []
+        f = open('products.json', 'r')
+        products_delete = json.load(f)
+        data_length = len(products_delete) - 1
+        print("Which Index Number to Delete")
+        delete_option = input(f"select a number 0-{data_length}: >> ")
+        i = 0
+        for entry in products_delete:
+            if i == int(delete_option):
+                pass
+                i += 1
+            else:
+                new_data.append(entry)
+                i = i + 1
+        with open("products.json", 'w') as f:
+            json.dump(new_data, f, indent=4)
+
+    def edit_data():
+        view_data()
+        new_data = []
+        f = open('products.json', 'r')
+        products_edit = json.load(f)
+        data_length = len(products_edit) - 1
+        print("Which Index Number to edit")
+        edit_option = input(f"select a number 0-{data_length}: >> ")
+        i = 0
+        for entry in products_edit:
+            if i == int(edit_option):
+                code = entry['code']
+                name = entry['name']
+                price = entry['price']
+                print(f"Current Code: {code}")
+                name = input("What would you like the new code to be: >> ")
+                print(f"Current Name: {name}")
+                name = input("What would you like the new name to be: >> ")
+                print(f"Current Price : {price}")
+                price = input("What would you like the new price to be: >> ")
+                new_data.append({"code": code, "name": name, "price": price})
+                i += 1
+            else:
+                new_data.append(entry)
+                i = i + 1
+        with open("products.json", 'w') as f:
+            json.dump(new_data, f, indent=4)
+
+    while True:
+        choices()
+        choice = int(input("\nChoose an option: "))
         if choice == 1:
-            print("Adding a product........")
-            productName = input("Enter the name of the product >>> ")
-            productPrice = input("Enter the price of the product >>> ")
-            # Adding the products to an array
-            productsList.append([productName, productPrice])
-
-            # Saving to external JSON file
-            products.append({
-              'id': len(products) + 1,
-              'name': productName,
-              'price': productPrice,
-            })
-
-            data['products'] = products
-            with open('products.json', 'w') as f:
-              json.dump(data, f)
-            print('*****Added Successfully......*****')
-            print("-"*50)
-
+            print("Opening all Products...")
+            view_data()
         elif choice == 2:
-            print("Looking up for a product...")
-            keyword = input("Enter Search Term: ")
-            for product in productsList:
-                if keyword in product:
-                    print(product)
-            # keyword = input("Enter Search Term: ")
-            # for product in products:
-            #     if keyword in product:
-            #         print('Name\t\tPrice')
-            #         print('-'*50)
-            #         print(f'{product.get("name")}\t{product.get("price")}')
-            #         print('-'*50)
-
+            print("Adding a product........")
+            add_data()
+            print("**** Successfully Added the product ****")
         elif choice == 3:
-            print("Displaying all products...")
-            print('ID\tName\t\tPrice')
-            print('-'*50)
-            for product in products:
-              print(f'{product.get("id")}\t{product.get("name")}\t{product.get("price")}')
-            print('-'*50)
-
+            delete_data()
+            print("**** Successfully Deleted the product ****")
         elif choice == 4:
-            print("Updating a product...")
-            
-
+            print("Editing a product....")
+            edit_data()
+            print("**** Successfully Deleted the product ****")
         elif choice == 5:
-            print("Deleting products...")
-            
+            break
+        else:
+            print("Invalid choice, please choose a different option")
 
-        elif choice == 6:
-            print("Quitting Program")
-    print("Program Terminated!")
+
