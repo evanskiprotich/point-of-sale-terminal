@@ -1,6 +1,7 @@
 from datetime import datetime
-from customers import customer
-from products import product
+from customers.customers import customer
+from products.products import product
+from purchase import purchase
 
 
 def main():
@@ -30,17 +31,19 @@ def main():
         menu = int(input())
 
         if menu == 1:
+            print('-' * 50)
             print("Opening customers menu......")
             customer()
 
         elif menu == 2:
+            print('-' * 50)
             print('Opening products menu.....')
             product()
 
         elif menu == 3:
+            print('-' * 50)
             print('Opening shopping menu.....')
-
-
+            purchase()
         elif menu == 0:
             print("Quitting Program.....")
             break

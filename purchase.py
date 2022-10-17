@@ -1,158 +1,303 @@
 import json
-import os
 
-# f = open('products.json', 'r')
-# store_items = json.load(f)
-
-clear = lambda: os.system('cls')
-
-store_items = [["C1", "Chickenjoy", 89],
-               ["C2", "Chickenjoy w/ Spaghetti", 100],
-               ["C3", "Chickenjoy w/ Fries", 96],
-               ["B1", "Burgersteak", 90],
-               ["B2", "Burgersteak w/ Lumpia", 110],
-               ["B3", "Burgersteak w/ Fries", 100],
-               ["Y1", "Yumburger", 20],
-               ["Y2", "Yumburger w/ Fries", 50],
-               ["S1", "Spaghetti", 60],
-               ["S2", "Spaghetti w/ Fries", 80],
-               ]
-user_input = None
-
-my_cart = []
+customer_file = "./json_data/customers.json"
 
 
-class SalesClass:
-    total_price = 0
-    item_code = None
-    item_quantity = 0
-
-    def payment(self):
-        amount = 0
-        while self.total_price > amount:
-            try:
-                clear()
-                print('')
-                print("-" * 50)
-                print("******* Purchase Menu Section *********")
-                print("-" * 50)
-                SalesClass.show_item()
-                SalesClass.check_cart()
-                amount = 0
-                amount = int(input("Cash Tendered: "))
-                if self.total_price > amount:
-                    print("Insufficient Amount")
-            except:
-                print("Invalid Input")
-                continue
-        if self.total_price < amount:
-            change = amount - self.total_price
-            print(f"Your Change: {change}")
-        print("Thank you!")
-
-    @classmethod
-    def split_input(cls, user_inp):
-        vals = user_inp.split(" ")
-        print(vals)
-        cls.item_code = vals[0]
-        cls.item_quantity = int(vals[1])
-
-    @staticmethod
-    def show_item():
-        print("\n")
-        print("{: >5} {: >25} {: >10}".format("Code", "Item", "Price"))
-        for item in store_items:
-            print("{: >5} {: >25} {: >10}".format(*item))
-            # print(f'{item.get("code")}\t{item.get("name")}\t\t{item.get("price")}')
-
-    @classmethod
-    def removeItem(cls):
-
-        input_item_code = input("Enter Item Code to remove: ").upper()
-        cls.split_input(input_item_code)
-        for row2, data2 in enumerate(my_cart):
-            if cls.item_code == my_cart[row2][0]:
-                if my_cart[row2][1] > 1:
-                    my_cart[row2][1] = my_cart[row2][1] - cls.item_quantity
-                    my_cart[row2][3] = my_cart[row2][2] * my_cart[row2][1]
-                    if my_cart[row2][1] < 1:
-                        my_cart.pop([row2][0])
-
-                else:
-                    my_cart.pop([row2][0])
-                break
-        cls.check_cart()
-
-    @classmethod
-    def getTotalPrice(cls):
-        cls.total_price = 0
-        for row, customer_items in enumerate(my_cart):
-            cls.total_price += my_cart[row][3]
-        print("\n{: >38}".format(f"TOTAL: {cls.total_price}"))
-
-    @classmethod
-    def check_cart(cls):
-        print("\n----------------------------------------")
-        print("{: >5} {: >10} {: >10} {: >10}".format("Item", "Qty", "Price", "Total"))
-
-        for customer_items in my_cart:
-            print("{: >5} {: >10} {: >10} {: >10}".format(*customer_items))
-        cls.getTotalPrice()
-        print("\n----------------------------------------")
-
-    @classmethod
-    def order(cls):
-        total = 0
-        for a, b in enumerate(store_items):
-            for c, d in enumerate(b):
-                if cls.item_code == d:
-                    is_exist = False
-                    num_row = 0
-                    for row, data in enumerate(my_cart):
-                        if my_cart[row][0] == store_items[a][c]:
-                            is_exist = True
-                            num_row = row
-                            break
-
-                    total = cls.item_quantity * store_items[a][c + 2]
-
-                    if is_exist:
-                        my_cart[num_row][1] += cls.item_quantity
-                        my_cart[num_row][3] += total
-
-                    else:
-                        temp_cart = [None, None, None, total]
-                        temp_cart[0] = (store_items[a][c])
-                        temp_cart[1] = cls.item_quantity
-                        temp_cart[2] = (store_items[a][c + 2])
-                        my_cart.append(temp_cart)
-
-
-while user_input != "F":
-    try:
-        clear()
+def purchase():
+    while True:
         print('')
         print("-" * 50)
-        print("******* Purchase Menu Section *********")
+        print("""
+            ******* Purchase Menu Section *********
+
+            1) Purchase products
+            2) List purchases
+            3) Back to Main Menu
+
+        """)
         print("-" * 50)
-        SalesClass.show_item()
-        SalesClass.check_cart()
-        user_input = input("Enter Code: ").upper()
 
-        if user_input == "C":
-            SalesClass.check_cart()
+        choice = input('Select a Menu option to continue: >> ')
 
-        elif user_input == "S":
-            SalesClass.show_item()
+        if choice == "1":
 
-        elif user_input == "R":
-            SalesClass.removeItem()
+            process_order()
 
+        elif choice == "2":
+
+            completed_orders()
+
+        elif choice == "3":
+            from main import main
+
+            main()
         else:
-            SalesClass.split_input(user_input)
-            SalesClass.order()
-    except:
-        pass
+            print('\nINVALID MENU OPTION')
 
-payment = SalesClass()
-payment.payment()
+
+def process_order():
+    fin_order = {}
+    with open("./json_data/cart.json", "r") as json_file:
+        order_temp = json.load(json_file)
+    # checks if cart is empty
+    if not order_temp:
+        from customers.customers import view_data
+        view_data()
+        with open(customer_file, "r") as json_file:
+            customer_temp = json.load(json_file)
+            data_length = len(customer_temp)
+            while True:
+                try:
+                    customer_id = int(input(f"\nEnter Customer ID(1-{data_length}) of the buyer: >> "))
+                except ValueError:
+                    print(f"\nINVALID INPUT! Selection can't be an Alphabet")
+                    continue
+                if customer_id > data_length:
+                    print("CUSTOMER DOES NOT EXIST! Enter VALID Customer ID!")
+                    continue
+                else:
+                    break
+
+            i = 1
+            for entry in customer_temp:
+                if i == int(customer_id):
+                    fin_order["Customer Name"] = entry["name"]
+                    order_temp.append(fin_order)
+                    i = i + 1
+                else:
+                    pass
+                    i = i + 1
+        from products.products import view_data
+        view_data()
+
+        with open("./json_data/products.json", "r") as json_file:
+            product_temp = json.load(json_file)
+        data_length = len(product_temp)
+
+        with open("./json_data/cart.json", "r") as json_file:
+            cart_temp = json.load(json_file)
+        opt = int(input(f"Enter Product ID(1 - {data_length}) of item you wish to add to cart: >> "))
+        i = 1
+        for entry in product_temp:
+
+            if i == int(opt):
+                prod_id = create_product_id()
+                fin_order[prod_id] = {}
+                prod_qty = entry["stock"]
+                fin_order[prod_id]["Product_id"] = opt
+                fin_order[prod_id]["name"] = entry["name"]
+                fin_order[prod_id]["stock"] = int(input(f"\nEnter quantity (less than or equal "
+                                                        f"to {prod_qty}) you wish to purchase: >> "))
+                fin_order[prod_id]["Product_Price"] = entry["price"]
+                price = float(fin_order[prod_id]["Product_Price"])
+                subtotal = price * fin_order[prod_id]["stock"]
+                fin_order[prod_id]["Sub-Total"] = float(subtotal)
+                cart_temp.append(fin_order)
+                i = i + 1
+
+            else:
+                pass
+                i = i + 1
+        with open("./json_data/cart.json", "w") as json_file:
+            json.dump(cart_temp, json_file, indent=4)
+            print("\nProduct Added to cart!")
+
+    else:
+        from products.products import view_data
+        view_data()
+        with open("./json_data/products.json", "r") as json_file:
+            prod_temp = json.load(json_file)
+        data_length = len(prod_temp)
+
+        with open("./json_data/cart.json", "r") as json_file:
+            cart_temp = json.load(json_file)
+
+        opt = int(input(f"Enter Product ID(1 - {data_length}) of item you wish to add to cart: >> "))
+        i = 1
+        for entry in prod_temp:
+
+            if i == int(opt):
+                prod_id = create_product_id()
+                fin_order[prod_id] = {}
+                prod_qty = entry["stock"]
+                fin_order[prod_id]["Product_id"] = opt
+                fin_order[prod_id]["Product_Name"] = entry["name"]
+                fin_order[prod_id]["Product_Quantity"] = int(input(f"\nEnter quantity (less than or equal "
+                                                                   f"to {prod_qty}) you wish to purchase: >> "))
+                fin_order[prod_id]["Product_Price"] = entry["price"]
+                price_tint = float(fin_order[prod_id]["Product_Price"])
+                subtotal = price_tint * fin_order[prod_id]["Product_Quantity"]
+                fin_order[prod_id]["Sub-Total"] = float(subtotal)
+                [open_cart_temp] = cart_temp
+                open_cart_temp.update(fin_order)
+
+                i = i + 1
+
+            else:
+                pass
+                i = i + 1
+        with open("./json_data/cart.json", "w") as json_file:
+            json.dump(cart_temp, json_file, indent=4)
+            print("\nProduct Added to cart!")
+
+    while True:
+        cont_shopping = int(input("\nPress 1 to continue shopping and 2 to complete purchase: >> "))
+        if cont_shopping == 1:
+            process_order()
+        elif cont_shopping == 2:
+            # calculating total from subtotal
+            with open("./json_data/cart.json", "r") as json_file:
+                checkout_temp = json.load(json_file)
+            emp_prd = {}
+            [opened_checkout_temp] = checkout_temp
+            new_id = "Total"
+            total = 0
+            for i in opened_checkout_temp:
+                if i == "Customer Name":
+                    continue
+                else:
+                    sub_total = float(opened_checkout_temp[i]["Sub-Total"])
+                    total += sub_total
+            emp_prd[new_id] = float(total)
+            opened_checkout_temp.update(emp_prd)
+
+            with open("./json_data/cart.json", "w") as json_file:
+                json.dump(checkout_temp, json_file, indent=4)
+        break
+
+    # printing a receipt
+    with open("./json_data/cart.json", "r") as json_file:
+        fin_temp = json.load(json_file)
+    [strip_fin_temp] = fin_temp
+
+    print("\n----------------------------------------------")
+    print("-------------------SHOP RECEIPT --------------------")
+    print("----------------------------------------------")
+    for i in strip_fin_temp:
+        if i == "Customer Name":
+            print(f"\nCustomer Name: {strip_fin_temp[i]}")
+        elif i == "Total":
+            print(f"\nTotal: Ksh. {strip_fin_temp[i]}")
+        else:
+            print(f"\nProduct Name: {strip_fin_temp[i]['name']}")
+            print(f"Product Quantity: {strip_fin_temp[i]['stock']}")
+            print(f"Product Price: Ksh. {strip_fin_temp[i]['Product_Price']}")
+            print(f"Sub-Total: Ksh. {strip_fin_temp[i]['Sub-Total']}")
+
+    print("\n----------------------------------------------")
+    print("-------Thank you for Shopping with us---------")
+    print("----------------------------------------------")
+
+    # product quantity decrement
+    with open("./json_data/cart.json", "r") as json_file:
+        pid_temp = json.load(json_file)
+    [open_pid] = pid_temp
+    for i in open_pid:
+        if i == "Customer Name":
+            continue
+        elif i == "Total":
+            continue
+        else:
+            p_id_list = open_pid[i]["Product_id"]
+            p_qty_list = open_pid[i]["stock"]
+            with open("./json_data/products.json", "r") as json_file:
+                prod_temp = json.load(json_file)
+            update_list = []
+            j = 1
+            for entry in prod_temp:
+                if j == p_id_list:
+                    product_name = entry["name"]
+                    product_qty = entry["stock"]
+                    product_price = entry["price"]
+                    product_qty = product_qty - p_qty_list
+                    update_list.append({"name": product_name,
+                                        "stock": product_qty,
+                                        "price": product_price})
+                    j = j + 1
+                else:
+                    update_list.append(entry)
+                    j = j + 1
+            with open("./json_data/products.json", "w") as json_file:
+                json.dump(update_list, json_file, indent=4)
+
+    # generating a purchase list
+    with open("./json_data/cart.json", "r") as json_file:
+        c_temp = json.load(json_file)
+    [strip_c_temp] = c_temp
+    with open("./json_data/cart.json", "r") as json_file:
+        o_temp = json.load(json_file)
+
+    purchase_combination = {}
+    order_id = create_purchase_id()
+    purchase_combination[order_id] = strip_c_temp
+    if not o_temp:
+        o_temp.append(purchase_combination)
+    else:
+        [open_o_temp] = o_temp
+        open_o_temp.update(purchase_combination)
+
+    with open("./json_data/cart.json", "w") as json_file:
+        json.dump(o_temp, json_file, indent=4)
+        print("\nOrder record captured!")
+    cart = []
+    with open("./json_data/cart.json", "w") as json_file:
+        json.dump(cart, json_file, indent=4)
+
+    process_order()
+
+
+def create_product_id():
+    with open("./json_data/cart.json", "r") as json_file:
+        gen_temp = json.load(json_file)
+    if not gen_temp:
+        new_id = 1
+        return new_id
+    else:
+        [open_gen_temp] = gen_temp
+        prev_id = list(open_gen_temp)[-1]
+        length = len(prev_id)
+        num = int(prev_id[4:length]) + 1
+        new_id = "Prod" + str(num)
+        return new_id
+
+
+def create_purchase_id():
+    with open("./json_data/cart.json", "r") as json_file:
+        od_temp = json.load(json_file)
+    if not od_temp:
+        new_id = "Ord1"
+        return new_id
+    else:
+        [open_od_temp] = od_temp
+        prev_id = list(open_od_temp)[-1]
+        # length = len(prev_id)
+        num = int(prev_id) + 1
+        new_id = "Ord" + str(num)
+        return new_id
+
+
+# Generating a purchase list
+def completed_orders():
+    with open("./json_data/cart.json", "r") as json_file:
+        o_temp = json.load(json_file)
+    [strip_o_temp] = o_temp
+
+    print("\n------------------------------- Processed Customer Orders -----------------------------------\n")
+
+    for i in strip_o_temp:
+        print(f"Order: {i}")
+        for j in strip_o_temp[i]:
+            if j == "Customer Name":
+                print(f"Customer Name: {strip_o_temp[i]['Customer Name']}")
+            elif j == "Total":
+                print(f"Total: Ksh. {strip_o_temp[i]['Total']}\n")
+            else:
+                p_name = strip_o_temp[i][j]['name']
+                p_price = strip_o_temp[i][j]['price']
+                p_qty = strip_o_temp[i][j]['stock']
+                print(f"Product Name: {p_name}, Product Price: {p_price}, "
+                      f"Product Quantity: {p_qty}, Sub-Total: Ksh. {strip_o_temp[i][j]['Sub-Total']}")
+    print("-----------------------------------------------------------------------------------------")
+    exit()
+
+# purchase()
