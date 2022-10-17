@@ -31,7 +31,7 @@ Python 3 is required to be installed in your system. Depending on your operating
 ### Installation
 To install this application, one is required to clone this repo by running the following command on your terminal:
 ```bash 
-git clone https://github.com/nassor-j-a/Point_of_Sale_Console_App
+git clone https://github.com/evanskiprotich/point-of-sale-terminal.git
 ```
 Then enter the folder of the application by running:
 ```bash 
