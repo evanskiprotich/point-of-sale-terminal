@@ -3,6 +3,7 @@ import json
 customer_file = "./json_data/customers.json"
 
 
+# https://cloud.smartdraw.com/share.aspx/?pubDocShare=3E3F1AC07B1A20ACA149B26FBE674D1991D
 def purchase():
     while True:
         print('')
@@ -36,7 +37,7 @@ def purchase():
 
 
 def process_order():
-    fin_order = {}
+    final_order = {}
     with open("./json_data/cart.json", "r") as json_file:
         order_temp = json.load(json_file)
     # checks if cart is empty
@@ -61,8 +62,8 @@ def process_order():
             i = 1
             for entry in customer_temp:
                 if i == int(customer_id):
-                    fin_order["Customer Name"] = entry["name"]
-                    order_temp.append(fin_order)
+                    final_order["Customer Name"] = entry["name"]
+                    order_temp.append(final_order)
                     i = i + 1
                 else:
                     pass
@@ -76,23 +77,23 @@ def process_order():
 
         with open("./json_data/cart.json", "r") as json_file:
             cart_temp = json.load(json_file)
-        opt = int(input(f"Enter Product ID(1 - {data_length}) of item you wish to add to cart: >> "))
+        option = int(input(f"Enter Product ID(1 - {data_length}) of item you wish to add to cart: >> "))
         i = 1
         for entry in product_temp:
 
-            if i == int(opt):
+            if i == int(option):
                 prod_id = create_product_id()
-                fin_order[prod_id] = {}
+                final_order[prod_id] = {}
                 prod_qty = entry["stock"]
-                fin_order[prod_id]["Product_id"] = opt
-                fin_order[prod_id]["name"] = entry["name"]
-                fin_order[prod_id]["stock"] = int(input(f"\nEnter quantity (less than or equal "
-                                                        f"to {prod_qty}) you wish to purchase: >> "))
-                fin_order[prod_id]["Product_Price"] = entry["price"]
-                price = float(fin_order[prod_id]["Product_Price"])
-                subtotal = price * fin_order[prod_id]["stock"]
-                fin_order[prod_id]["Sub-Total"] = float(subtotal)
-                cart_temp.append(fin_order)
+                final_order[prod_id]["id"] = option
+                final_order[prod_id]["name"] = entry["name"]
+                final_order[prod_id]["stock"] = int(input(f"\nEnter quantity (less than or equal "
+                                                          f"to {prod_qty}) you wish to purchase: >> "))
+                final_order[prod_id]["Product_Price"] = entry["price"]
+                price = float(final_order[prod_id]["Product_Price"])
+                subtotal = price * final_order[prod_id]["stock"]
+                final_order[prod_id]["Sub-Total"] = float(subtotal)
+                cart_temp.append(final_order)
                 i = i + 1
 
             else:
@@ -112,24 +113,24 @@ def process_order():
         with open("./json_data/cart.json", "r") as json_file:
             cart_temp = json.load(json_file)
 
-        opt = int(input(f"Enter Product ID(1 - {data_length}) of item you wish to add to cart: >> "))
+        option = int(input(f"Enter Product ID(1 - {data_length}) of item you wish to add to cart: >> "))
         i = 1
         for entry in prod_temp:
 
-            if i == int(opt):
+            if i == int(option):
                 prod_id = create_product_id()
-                fin_order[prod_id] = {}
+                final_order[prod_id] = {}
                 prod_qty = entry["stock"]
-                fin_order[prod_id]["Product_id"] = opt
-                fin_order[prod_id]["Product_Name"] = entry["name"]
-                fin_order[prod_id]["Product_Quantity"] = int(input(f"\nEnter quantity (less than or equal "
-                                                                   f"to {prod_qty}) you wish to purchase: >> "))
-                fin_order[prod_id]["Product_Price"] = entry["price"]
-                price_tint = float(fin_order[prod_id]["Product_Price"])
-                subtotal = price_tint * fin_order[prod_id]["Product_Quantity"]
-                fin_order[prod_id]["Sub-Total"] = float(subtotal)
+                final_order[prod_id]["Product_id"] = option
+                final_order[prod_id]["Product_Name"] = entry["name"]
+                final_order[prod_id]["Product_Quantity"] = int(input(f"\nEnter quantity (less than or equal "
+                                                                     f"to {prod_qty}) you wish to purchase: >> "))
+                final_order[prod_id]["Product_Price"] = entry["price"]
+                price_tint = float(final_order[prod_id]["Product_Price"])
+                subtotal = price_tint * final_order[prod_id]["Product_Quantity"]
+                final_order[prod_id]["Sub-Total"] = float(subtotal)
                 [open_cart_temp] = cart_temp
-                open_cart_temp.update(fin_order)
+                open_cart_temp.update(final_order)
 
                 i = i + 1
 
@@ -171,7 +172,7 @@ def process_order():
     [strip_fin_temp] = fin_temp
 
     print("\n----------------------------------------------")
-    print("-------------------SHOP RECEIPT --------------------")
+    print("-------------------SHOP RECEIPT -----------------")
     print("----------------------------------------------")
     for i in strip_fin_temp:
         if i == "Customer Name":
@@ -198,7 +199,7 @@ def process_order():
         elif i == "Total":
             continue
         else:
-            p_id_list = open_pid[i]["Product_id"]
+            p_id_list = open_pid[i]["id"]
             p_qty_list = open_pid[i]["stock"]
             with open("./json_data/products.json", "r") as json_file:
                 prod_temp = json.load(json_file)
@@ -206,13 +207,16 @@ def process_order():
             j = 1
             for entry in prod_temp:
                 if j == p_id_list:
+                    product_id = entry["code"]
                     product_name = entry["name"]
                     product_qty = entry["stock"]
                     product_price = entry["price"]
                     product_qty = product_qty - p_qty_list
-                    update_list.append({"name": product_name,
-                                        "stock": product_qty,
-                                        "price": product_price})
+                    update_list.append({
+                        "code": product_id,
+                        "name": product_name,
+                        "stock": product_qty,
+                        "price": product_price})
                     j = j + 1
                 else:
                     update_list.append(entry)
@@ -256,8 +260,8 @@ def create_product_id():
         [open_gen_temp] = gen_temp
         prev_id = list(open_gen_temp)[-1]
         length = len(prev_id)
-        num = int(prev_id[4:length]) + 1
-        new_id = "Prod" + str(num)
+        num = int(length) + 1
+        new_id = num
         return new_id
 
 
@@ -265,14 +269,14 @@ def create_purchase_id():
     with open("./json_data/cart.json", "r") as json_file:
         od_temp = json.load(json_file)
     if not od_temp:
-        new_id = "Ord1"
+        new_id = 1
         return new_id
     else:
         [open_od_temp] = od_temp
         prev_id = list(open_od_temp)[-1]
-        # length = len(prev_id)
-        num = int(prev_id) + 1
-        new_id = "Ord" + str(num)
+        length = len(prev_id)
+        num = int(length) + 1
+        new_id = num
         return new_id
 
 
@@ -292,12 +296,13 @@ def completed_orders():
             elif j == "Total":
                 print(f"Total: Ksh. {strip_o_temp[i]['Total']}\n")
             else:
+                # p_code = strip_o_temp[i][j]['code']
                 p_name = strip_o_temp[i][j]['name']
                 p_price = strip_o_temp[i][j]['price']
                 p_qty = strip_o_temp[i][j]['stock']
                 print(f"Product Name: {p_name}, Product Price: {p_price}, "
                       f"Product Quantity: {p_qty}, Sub-Total: Ksh. {strip_o_temp[i][j]['Sub-Total']}")
     print("-----------------------------------------------------------------------------------------")
-    exit()
+    exit(0)
 
 # purchase()

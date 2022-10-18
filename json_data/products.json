@@ -1,73 +1,74 @@
 [
     {
+        "code": 1,
         "name": "Chickenjoy",
-        "stock": 32,
+        "stock": 26,
         "price": 89
     },
     {
-        "code": "C2",
+        "code": 2,
         "name": "Chickenjoy w/ Spaghetti",
         "price": 100,
         "stock": 65
     },
     {
-        "code": "C3",
+        "code": 3,
         "name": "Chickenjoy w/ Fries",
-        "price": 96,
-        "stock": 98
+        "stock": 96,
+        "price": 96
     },
     {
-        "code": "B1",
+        "code": 4,
         "name": "Burgersteak",
         "price": 90,
         "stock": 105
     },
     {
-        "code": "B2",
+        "code": 5,
         "name": "Burgersteak w/ Lumpia",
-        "price": 110,
-        "stock": 54
+        "stock": 47,
+        "price": 110
     },
     {
-        "code": "B3",
+        "code": 6,
         "name": "Burgersteak w/ Fries",
         "price": 100,
         "stock": 55
     },
     {
-        "code": "Y1",
+        "code": 7,
         "name": "Yumburger",
         "price": 20,
         "stock": 100
     },
     {
-        "code": "Y2",
+        "code": 8,
         "name": "Yumburger w/ Fries",
         "price": 50,
         "stock": 69
     },
     {
-        "code": "S1",
+        "code": 9,
         "name": "Spaghetti",
         "price": 60,
         "stock": 10
     },
     {
-        "code": "S2",
+        "code": 10,
         "name": "Spaghetti w/ Fries",
         "price": 80,
         "stock": 5
     },
     {
-        "code": "D1",
+        "code": 11,
         "name": "Soft Drink",
-        "price": 150,
-        "stock": 53
+        "stock": 41,
+        "price": 150
     },
     {
-        "code": "T3",
+        "code": 12,
         "name": "tea",
-        "price": 50,
-        "stock": 6
+        "stock": 2,
+        "price": 50
     }
 ]

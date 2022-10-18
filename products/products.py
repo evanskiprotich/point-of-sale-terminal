@@ -81,6 +81,29 @@ def edit_data():
         json.dump(new_data, f, indent=4)
 
 
+# search for product by name
+def search_name():
+    while True:
+        product_name = input("\nEnter name of product to search: >> ")
+        check = confirm_name(product_name)
+        if check == 'y':
+            break
+        else:
+            print("\nProduct not found!!!")
+
+
+def confirm_name(product_name):
+    with open("./json_data/products.json", "r") as json_file:
+        product_temp = json.load(json_file)
+    for entry in product_temp:
+        if product_name in entry['name']:
+            print(f"Product Name: {entry['name']}")
+            return 'y'
+        else:
+            continue
+    return
+
+
 def product():
     def choices():
         print('')
@@ -92,7 +115,8 @@ def product():
         print("2) Add | Create a Product")
         print("3) Delete a Product")
         print("4) Update a product")
-        print("5) Quit")
+        print("5) Search a product")
+        print("6) Quit")
 
     while True:
         choices()
@@ -111,7 +135,11 @@ def product():
             print("Editing a product....")
             edit_data()
             print("**** Successfully Deleted the product ****")
+
         elif choice == 5:
+            print("Searching For a Product.....")
+            search_name()
+        elif choice == 6:
             break
         else:
             print("Invalid choice, please choose a different option")
