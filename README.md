@@ -1,15 +1,19 @@
-# point-of-sale-terminal
+# Point of Sale Terminal
 A python point of sale CLI terminal System
 
 ## General Info
-POS Console App is a Command - Line based Point Of Sale System. The project was developed using Python programming language. It is a single user application meant to operate in a grocery store. The system facilitates for CRUD operations for both customers and products, and further supports purchase functionalities. The project objectives were to achieve a menu-driven system based on user's input that further executes its sub-programs associated with the menu. The details in the process were captured in a JSON file.
+POS Console App is a Command - Line based Point Of Sale System. The project was developed using Python programming language. It is a single user application meant to operate in a sales store or shops. The system facilitates for CRUD operations for both customers and products, and further supports purchase functionalities. The project objectives were to achieve a menu-driven system based on user's input that further executes its sub-programs associated with the menu. The details in the process were captured in a JSON file.
 
 
 ## Table of contents
 * [General info](#General-Info)
+* [Flow chart](#FLow-Chart)
 * [Technologies](#Technologies)
 * [Features](#Features)
 * [Setup](#Setup)
+
+## Flow Chart
+https://cloud.smartdraw.com/share.aspx/?pubDocShare=3E3F1AC07B1A20ACA149B26FBE674D1991D
 
 ## Technologies
 * Language: [Python 3.8](https://www.python.org/downloads/release/python-3810/)
@@ -35,10 +39,10 @@ git clone https://github.com/evanskiprotich/point-of-sale-terminal.git
 ```
 Then enter the folder of the application by running:
 ```bash 
-cd Point_of_Sale_Console_App
+cd point-of-sale-terminal
 ```
 Start the program by running the following command:
 ```bash 
-python3 main.py
+python main.py
 ```
 

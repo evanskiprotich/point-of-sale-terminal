@@ -3,7 +3,6 @@ import json
 customer_file = "./json_data/customers.json"
 
 
-# https://cloud.smartdraw.com/share.aspx/?pubDocShare=3E3F1AC07B1A20ACA149B26FBE674D1991D
 def purchase():
     while True:
         print('')
@@ -51,7 +50,7 @@ def process_order():
                 try:
                     customer_id = int(input(f"\nEnter Customer ID(1-{data_length}) of the buyer: >> "))
                 except ValueError:
-                    print(f"\nINVALID INPUT! Selection can't be an Alphabet")
+                    print(f"\nINVALID INPUT!")
                     continue
                 if customer_id > data_length:
                     print("CUSTOMER DOES NOT EXIST! Enter VALID Customer ID!")
@@ -101,7 +100,7 @@ def process_order():
                 i = i + 1
         with open("./json_data/cart.json", "w") as json_file:
             json.dump(cart_temp, json_file, indent=4)
-            print("\nProduct Added to cart!")
+            print("\n\n*****Product Added to cart!*****")
 
     else:
         from products.products import view_data
@@ -121,13 +120,13 @@ def process_order():
                 prod_id = create_product_id()
                 final_order[prod_id] = {}
                 prod_qty = entry["stock"]
-                final_order[prod_id]["Product_id"] = option
-                final_order[prod_id]["Product_Name"] = entry["name"]
-                final_order[prod_id]["Product_Quantity"] = int(input(f"\nEnter quantity (less than or equal "
-                                                                     f"to {prod_qty}) you wish to purchase: >> "))
+                final_order[prod_id]["id"] = option
+                final_order[prod_id]["name"] = entry["name"]
+                final_order[prod_id]["stock"] = int(input(f"\nEnter quantity (less than or equal "
+                                                          f"to {prod_qty}) you wish to purchase: >> "))
                 final_order[prod_id]["Product_Price"] = entry["price"]
                 price_tint = float(final_order[prod_id]["Product_Price"])
-                subtotal = price_tint * final_order[prod_id]["Product_Quantity"]
+                subtotal = price_tint * final_order[prod_id]["stock"]
                 final_order[prod_id]["Sub-Total"] = float(subtotal)
                 [open_cart_temp] = cart_temp
                 open_cart_temp.update(final_order)
@@ -139,7 +138,7 @@ def process_order():
                 i = i + 1
         with open("./json_data/cart.json", "w") as json_file:
             json.dump(cart_temp, json_file, indent=4)
-            print("\nProduct Added to cart!")
+            print("\n\n***Product Added to cart!****")
 
     while True:
         cont_shopping = int(input("\nPress 1 to continue shopping and 2 to complete purchase: >> "))
@@ -169,21 +168,21 @@ def process_order():
     # printing a receipt
     with open("./json_data/cart.json", "r") as json_file:
         fin_temp = json.load(json_file)
-    [strip_fin_temp] = fin_temp
+    [receipt] = fin_temp
 
     print("\n----------------------------------------------")
     print("-------------------SHOP RECEIPT -----------------")
     print("----------------------------------------------")
-    for i in strip_fin_temp:
+    for i in receipt:
         if i == "Customer Name":
-            print(f"\nCustomer Name: {strip_fin_temp[i]}")
+            print(f"\nCustomer Name: {receipt[i]}")
         elif i == "Total":
-            print(f"\nTotal: Ksh. {strip_fin_temp[i]}")
+            print(f"\nTotal: Ksh. {receipt[i]}")
         else:
-            print(f"\nProduct Name: {strip_fin_temp[i]['name']}")
-            print(f"Product Quantity: {strip_fin_temp[i]['stock']}")
-            print(f"Product Price: Ksh. {strip_fin_temp[i]['Product_Price']}")
-            print(f"Sub-Total: Ksh. {strip_fin_temp[i]['Sub-Total']}")
+            print(f"\nProduct Name: {receipt[i]['name']}")
+            print(f"Product Quantity: {receipt[i]['stock']}")
+            print(f"Product Price: Ksh. {receipt[i]['Product_Price']}")
+            print(f"Sub-Total: Ksh. {receipt[i]['Sub-Total']}")
 
     print("\n----------------------------------------------")
     print("-------Thank you for Shopping with us---------")
@@ -242,12 +241,13 @@ def process_order():
 
     with open("./json_data/cart.json", "w") as json_file:
         json.dump(o_temp, json_file, indent=4)
-        print("\nOrder record captured!")
+        print("\n\n****Order has been successfully recorded****")
     cart = []
     with open("./json_data/cart.json", "w") as json_file:
         json.dump(cart, json_file, indent=4)
 
     process_order()
+    exit()
 
 
 def create_product_id():
@@ -286,23 +286,23 @@ def completed_orders():
         o_temp = json.load(json_file)
     [strip_o_temp] = o_temp
 
-    print("\n------------------------------- Processed Customer Orders -----------------------------------\n")
+    print("\n******* Processed Customer Orders **********\n")
 
     for i in strip_o_temp:
         print(f"Order: {i}")
-        for j in strip_o_temp[i]:
+        for j in strip_o_temp:
             if j == "Customer Name":
-                print(f"Customer Name: {strip_o_temp[i]['Customer Name']}")
+                print(f"Customer Name: {strip_o_temp['Customer Name']}")
             elif j == "Total":
-                print(f"Total: Ksh. {strip_o_temp[i]['Total']}\n")
-            else:
-                # p_code = strip_o_temp[i][j]['code']
-                p_name = strip_o_temp[i][j]['name']
-                p_price = strip_o_temp[i][j]['price']
-                p_qty = strip_o_temp[i][j]['stock']
-                print(f"Product Name: {p_name}, Product Price: {p_price}, "
-                      f"Product Quantity: {p_qty}, Sub-Total: Ksh. {strip_o_temp[i][j]['Sub-Total']}")
-    print("-----------------------------------------------------------------------------------------")
+                print(f"Total: Ksh. {strip_o_temp['Total']}\n")
+            # else:
+            #     # p_code = strip_o_temp[i][j]['code']
+            #     p_name = strip_o_temp[i][j]['name']
+            #     p_price = strip_o_temp[i][j]['price']
+            #     p_qty = strip_o_temp[i][j]['stock']
+            #     print(f"Product Name: {p_name}, Product Price: {p_price}, "
+            #           f"Product Quantity: {p_qty}, Sub-Total: Ksh. {strip_o_temp[i][j]['Sub-Total']}")
+    print("-" * 50)
     exit(0)
 
 # purchase()
