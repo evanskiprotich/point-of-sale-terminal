@@ -20,20 +20,20 @@
     {
         "code": 4,
         "name": "Burgersteak",
-        "price": 90,
-        "stock": 105
+        "stock": 93,
+        "price": 90
     },
     {
         "code": 5,
         "name": "Burgersteak w/ Lumpia",
-        "stock": 40,
+        "stock": 31,
         "price": 110
     },
     {
         "code": 6,
         "name": "Burgersteak w/ Fries",
-        "price": 100,
-        "stock": 55
+        "stock": 44,
+        "price": 100
     },
     {
         "code": 7,
@@ -50,8 +50,8 @@
     {
         "code": 9,
         "name": "Spaghetti",
-        "price": 60,
-        "stock": 10
+        "stock": 7,
+        "price": 60
     },
     {
         "code": 10,

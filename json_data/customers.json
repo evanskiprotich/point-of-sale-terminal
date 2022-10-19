@@ -1,32 +1,14 @@
 [
     {
         "id": 1,
-        "name": "Evans",
-        "phone": "14444444"
+        "name": "Evan",
+        "phone": "0723287190",
+        "email": "evanskiprotich14@gmail.com"
     },
     {
         "id": 2,
-        "name": "Sam",
-        "phone": "1000000"
-    },
-    {
-        "id": 3,
-        "name": "Ian",
-        "phone": "112255"
-    },
-    {
-        "id": 4,
-        "name": "susan",
-        "phone": "555887"
-    },
-    {
-        "id": 5,
-        "name": "titus",
-        "phone": "11115"
-    },
-    {
-        "id": 6,
-        "name": "joe",
-        "phone": "1235"
+        "name": "Albert",
+        "email": "albert@jengaschool.com",
+        "phone": "0790426978"
     }
 ]

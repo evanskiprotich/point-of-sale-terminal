@@ -4,60 +4,111 @@ version : 1.0.0
 Date :06.10.2022
 """
 import json
+import re
 
 
 def view_data():
-    print('Id\tName\t\tPhone')
+    print('Id\tName\t\tPhone\t\t\tEmail')
     print('-' * 50)
     f = open('./json_data/customers.json', 'r')
     customers = json.load(f)
     for customer in customers:
-        print(f'{customer.get("id")}\t{customer.get("name")}\t\t{customer.get("phone")}')
+        print(f'{customer.get("id")}\t{customer.get("name")}\t\t\t{customer.get("phone")}\t\t\t{customer.get("email")}')
     print('-' * 50)
+
+
+def solve(email):
+    pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+    if re.match(pat, email):
+        return True
+    return False
+
+
+def validate_phone(phone):
+    pattern = r"^[07]|[01][0-9]{10}$"
+    if re.match(pattern, phone):
+        return True
+    return False
 
 
 def add_data():
     f = open('./json_data/customers.json', 'r')
     customers_add = json.load(f)
     data_length = len(customers_add)
-    item_data = {
-        "id": data_length + 1,
-        "name": input("Name of the Customer: >> "),
-        "phone": input("Phone Number of the Customer: >> ")
-    }
 
-    customers_add.append(item_data)
+    # item_data = {
+    #     "id": data_length + 1,
+    #     "name": input("Name of the Customer: >> "),
+    #     "phone": input("Phone Number of the Customer: >> "),
+    #     "email": input("Email of the Customer: >> ")
+    # }
+    customer = {}
+    customer["id"] = data_length + 1
+    customer["name"] = input("Enter Name: ")
+    while True:
+        email = input("Customer Email: ")
+        if solve(email):
+            customer["email"] = email
+            break
+        else:
+            print("Enter the correct email format!")
+            continue
+    while True:
+        phone = input("Enter Phone Number: ")
+        if validate_phone(phone):
+            customer["phone"] = phone
+            break
+        else:
+            print("Phone number should start with 0 !")
+            continue
+    customers_add.append(customer)
+
+    # customers_add.append(item_data)
 
     with open("./json_data/customers.json", 'w') as json_file:
         json.dump(customers_add, json_file, indent=4)
 
 
 def edit_data():
-    view_data()
-    new_data = []
-    f = open('./json_data/customers.json', 'r')
-    customers_edit = json.load(f)
-    data_length = len(customers_edit) - 1
-    id_length = len(customers_edit)
-    print("Which Index Number to edit")
-    edit_option = input(f"select a number 0-{data_length}: >> ")
-    i = 0
-    for entry in customers_edit:
-        if i == int(edit_option):
-            customers_name = entry['name']
-            customers_phone = entry['phone']
-            customers_id = id_length
-            print(f"Current Name: {customers_name}")
-            customers_name = input("What would you like the new name to be: ")
-            print(f"Current Phone : {customers_phone}")
-            customers_phone = input("What would you like the new phone to be: ")
-            new_data.append({"id": customers_id, "name": customers_name, "phone": customers_phone})
-            i += 1
-        else:
-            new_data.append(entry)
-            i = i + 1
-    with open("./json_data/customers.json", 'w') as f:
-        json.dump(new_data, f, indent=4)
+    print("Want to update a customer?")
+    print("Press 1 to view index of Customer you want to update: >> ")
+    user_input = input("Enter value to proceed: ")
+    if user_input == "1":
+        view_data()
+        new_data = []
+        f = open('./json_data/customers.json', 'r')
+        customers = json.load(f)
+        data_length = len(customers) - 1
+        print("Which index would you like to update?")
+        edit_option = input(f"Select a number between 0 and {data_length}: ")
+        i = 0
+        for customer in customers:
+            if i == int(edit_option):
+                id = customer["id"]
+                name = customer["name"]
+                phone = customer["phone"]
+                email = customer["email"]
+                print(f"ID of customer is: {id}")
+                print(f"Name of customer is:  {name}")
+                name = input("What would you like the new name of customer be?:  ")
+                print(f"Phone No of customer is: {phone}")
+                phone = input("What would you like the new Phone No of customer be?:  ")
+                print(f"Email of customer is: {email}")
+                email = input("What would you like the new email of customer be?:  ")
+                new_data.append({"id": id, "name": name, "phone": phone, "email": email})
+                print("\n")
+
+                i = i + 1
+            else:
+                new_data.append(customer)
+                i = i + 1
+        with open('./json_data/customers.json', 'w', encoding='utf-8') as json_file:
+            json.dump(new_data, json_file, indent=4, separators=(',', ': '))
+            print("Customer updated successfully")
+
+    else:
+        print("Invalid input try again")
+        edit_data()
 
 
 def delete_data():
