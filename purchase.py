@@ -227,6 +227,8 @@ def process_order():
                     j = j + 1
             with open("./json_data/products.json", "w") as json_file:
                 json.dump(update_list, json_file, indent=4)
+        process_order()
+        break
 
     # generating a purchase list
     with open("./json_data/cart.json", "r") as json_file:
@@ -250,8 +252,6 @@ def process_order():
     cart = []
     with open("./json_data/cart.json", "w") as json_file:
         json.dump(cart, json_file, indent=4)
-
-    process_order()
 
 
 def create_product_id():
@@ -307,7 +307,7 @@ def completed_orders():
                 print(f"Product Name: {p_name}, Product Price: {p_price}, "
                       f"Product Quantity: {p_qty}, Sub-Total: Ksh. {complete_order[i][j]['Sub-Total']}")
     print("-" * 50)
-    exit(0)
+    exit()
 
 
 def send_mail():
@@ -324,10 +324,9 @@ def send_mail():
     email_password = 'kvhblstbslluoftn'
     email_receiver = email_receive
 
-    subject = "YOUR RECEIPT"
+    subject = "SHOPPING RECEIPT FROM STORE X"
 
-    body = "\n--------------------------------------------------"
-    body += "-------------------SHOP RECEIPT--------------------"
+    body = "-------------------SHOP RECEIPT--------------------"
     body += "\n"
 
     for i in email:
@@ -338,14 +337,13 @@ def send_mail():
         elif i == "Email":
             email_receiver = {email[i]}
         else:
-            body += f"\nProduct Name: {email[i]['name']}"
+            # body += f"Product Name\t\tProduct Quantity\tProduct Price"
+            body += f"Product Name: {email[i]['name']}"
             body += f"\nProduct Quantity: {email[i]['stock']}"
             body += f"\nProduct Price: Ksh. {email[i]['Product_Price']}"
             body += f"\nSub-Total: Ksh. {email[i]['Sub-Total']}"
-            body += "\n"
-    body += "\n*" * 50
-    body += "******** Thank you for Shopping with us *******"
-    body += "*" * 50
+            body += "\n\n"
+    body += "\n\n\n******** Thank you for Shopping with us *******"
 
     mail = EmailMessage()
     mail['From'] = email_sender

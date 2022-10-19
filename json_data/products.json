@@ -2,25 +2,25 @@
     {
         "code": 1,
         "name": "Chickenjoy",
-        "stock": 17,
+        "stock": 13,
         "price": 89
     },
     {
         "code": 2,
         "name": "Chickenjoy w/ Spaghetti",
-        "stock": 63,
+        "stock": 52,
         "price": 100
     },
     {
         "code": 3,
         "name": "Chickenjoy w/ Fries",
-        "stock": 92,
+        "stock": 86,
         "price": 96
     },
     {
         "code": 4,
         "name": "Burgersteak",
-        "stock": 93,
+        "stock": 88,
         "price": 90
     },
     {
@@ -32,14 +32,14 @@
     {
         "code": 6,
         "name": "Burgersteak w/ Fries",
-        "stock": 44,
+        "stock": 39,
         "price": 100
     },
     {
         "code": 7,
         "name": "Yumburger",
-        "price": 20,
-        "stock": 100
+        "stock": 85,
+        "price": 20
     },
     {
         "code": 8,

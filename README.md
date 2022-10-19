@@ -1,23 +1,23 @@
-# Point of Sale Terminal
+# `Point of Sale Terminal`
 A python point of sale CLI terminal System
+## `SEPA Sprint 1` ##
 
 ## General Info
-POS Console App is a Command - Line based Point Of Sale System. The project was developed using Python programming language. It is a single user application meant to operate in a sales store or shops. The system facilitates for CRUD operations for both customers and products, and further supports purchase functionalities. The project objectives were to achieve a menu-driven system based on user's input that further executes its sub-programs associated with the menu. The details in the process were captured in a JSON file.
+POS Console App is a Command - Line based Point Of Sale System. 
+The project was developed using Python programming language. The system facilitates for CRUD operations for both customers and products, and further supports purchase functionalities. 
+
 
 
 ## Table of contents
 * [General info](#General-Info)
-* [Flow chart](#FLow-Chart)
-* [Technologies](#Technologies)
+* [Flow chart](#FLow Chart)
 * [Features](#Features)
+* [Goals](#Goals)
 * [Setup](#Setup)
 
 ## Flow Chart
 https://cloud.smartdraw.com/share.aspx/?pubDocShare=3E3F1AC07B1A20ACA149B26FBE674D1991D
 
-## Technologies
-* Language: [Python 3.8](https://www.python.org/downloads/release/python-3810/)
-* IDE: [Pycharm](https://www.jetbrains.com/help/pycharm/quick-start-guide.html)
 
 ## Features
 ## Main Menu
@@ -28,6 +28,11 @@ A user is able to feed into the system customer data, view available customers, 
 A user can key in the product's data for inventory purposes, view the available products, update product data and delete a product.
 ### Purchase function
 Customer details were first retrieved then added to the ongoing purchase, the user then adds the products and the quantities that the customer has ordered into a cart. In the process the subtotal of all products are calculated. During checkout, the total cost is calculated, product quantity decremented for the remaining products in the store and a receipt issued to the customer. The data captured in the cart is used to generate a purchase log that can later be viewed. The cart is then emptied to make room for future purchases. The purchase log generated contains the orders that were made from different purchases, the customers in-charge, purchased products and total amounts.
+
+## Goals
+
+Implement a python program that starts with a menu, gets user menu choice and proceeds to execute the subprogram associated with the menu.
+The data will be stored in a json file.
 
 ## Setup
 ### Requirements
