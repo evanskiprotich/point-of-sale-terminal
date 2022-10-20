@@ -1,4 +1,5 @@
 import json
+from tabulate import tabulate
 
 filename = "./json_data/products.json"
 

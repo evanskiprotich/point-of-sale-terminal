@@ -227,31 +227,30 @@ def process_order():
                     j = j + 1
             with open("./json_data/products.json", "w") as json_file:
                 json.dump(update_list, json_file, indent=4)
-        process_order()
-        break
 
-    # generating a purchase list
-    with open("./json_data/cart.json", "r") as json_file:
-        c_temp = json.load(json_file)
-    [purchases] = c_temp
-    with open("./json_data/cart.json", "r") as json_file:
-        order_temp = json.load(json_file)
+        # generating a purchase list
+        with open("./json_data/cart.json", "r") as json_file:
+            c_temp = json.load(json_file)
+        [purchases] = c_temp
+        with open("./json_data/cart.json", "r") as json_file:
+            order_temp = json.load(json_file)
 
-    purchase_combination = {}
-    order_id = create_purchase_id()
-    purchase_combination[order_id] = purchases
-    if not order_temp:
-        order_temp.append(purchase_combination)
-    else:
-        [open_o_temp] = order_temp
-        open_o_temp.update(purchase_combination)
+        purchase_combination = {}
+        order_id = create_purchase_id()
+        purchase_combination[order_id] = purchases
+        if not order_temp:
+            order_temp.append(purchase_combination)
+        else:
+            [open_o_temp] = order_temp
+            open_o_temp.update(purchase_combination)
 
-    with open("./json_data/cart.json", "w") as json_file:
-        json.dump(order_temp, json_file, indent=4)
-        print("\n\n****Order has been successfully recorded****")
-    cart = []
-    with open("./json_data/cart.json", "w") as json_file:
-        json.dump(cart, json_file, indent=4)
+        with open("./json_data/cart.json", "w") as json_file:
+            json.dump(order_temp, json_file, indent=4)
+            print("\n\n****Order has been successfully recorded****")
+        cart = []
+        with open("./json_data/cart.json", "w") as json_file:
+            json.dump(cart, json_file, indent=4)
+    process_order()
 
 
 def create_product_id():
@@ -338,10 +337,16 @@ def send_mail():
             email_receiver = {email[i]}
         else:
             # body += f"Product Name\t\tProduct Quantity\tProduct Price"
-            body += f"Product Name: {email[i]['name']}"
-            body += f"\nProduct Quantity: {email[i]['stock']}"
-            body += f"\nProduct Price: Ksh. {email[i]['Product_Price']}"
-            body += f"\nSub-Total: Ksh. {email[i]['Sub-Total']}"
+            body += f"""
+                    _________________________________________________
+                    Name\t\tQuantity\tPrice\tSubTotal
+                    _________________________________________________
+                    {email[i]['name']}\t\t{email[i]['stock']}\t\t{email[i]['Product_Price']}\t{email[i]['Sub-Total']}
+                    """
+            # body += f"\nProduct Name: {email[i]['name']}"
+            # body += f"\nProduct Quantity: {email[i]['stock']}"
+            # body += f"\nProduct Price: Ksh. {email[i]['Product_Price']}"
+            # body += f"\nSub-Total: Ksh. {email[i]['Sub-Total']}"
             body += "\n\n"
     body += "\n\n\n******** Thank you for Shopping with us *******"
 
