@@ -4,23 +4,5 @@
         "name": "Evan",
         "phone": "0723287190",
         "email": "evanskiprotich14@gmail.com"
-    },
-    {
-        "id": 2,
-        "name": "Albert",
-        "email": "albert@jengaschool.com",
-        "phone": "0790426978"
-    },
-    {
-        "id": 3,
-        "name": "Jane",
-        "email": "jane@gmail.com",
-        "phone": "0720893"
-    },
-    {
-        "id": 4,
-        "name": "Kip",
-        "email": "chebesharii@gmail.com",
-        "phone": "0714860890"
     }
 ]

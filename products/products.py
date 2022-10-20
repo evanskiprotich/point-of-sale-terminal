@@ -1,5 +1,4 @@
 import json
-from tabulate import tabulate
 
 filename = "./json_data/products.json"
 
@@ -99,6 +98,8 @@ def confirm_name(product_name):
     for entry in product_temp:
         if product_name in entry['name']:
             print(f"Product Name: {entry['name']}")
+            print(f"Product Price: {entry['price']}")
+            print(f"Product Quantity: {entry['stock']}")
             return 'y'
         else:
             continue

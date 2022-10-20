@@ -47,6 +47,8 @@ def main():
         elif menu == 0:
             print("Quitting Program.....")
             break
+        else:
+            print("Please Select the correct Menu")
     print("Program Terminated!")
 
 
