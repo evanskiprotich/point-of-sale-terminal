@@ -1,3 +1,9 @@
+"""
+This program keeps track of all of our products
+version : 1.0.0
+Date :06.10.2022
+"""
+
 import json
 
 filename = "./json_data/products.json"

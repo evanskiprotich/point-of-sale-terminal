@@ -2,7 +2,7 @@
     {
         "code": 1,
         "name": "Chicken",
-        "stock": 10,
+        "stock": 22,
         "price": 89
     },
     {
@@ -14,7 +14,7 @@
     {
         "code": 3,
         "name": "Fries",
-        "stock": 70,
+        "stock": 68,
         "price": 96
     },
     {
@@ -50,19 +50,19 @@
     {
         "code": 9,
         "name": "Spaghetti",
-        "stock": 7,
+        "stock": 15,
         "price": 60
     },
     {
         "code": 10,
         "name": "Water",
-        "price": 80,
-        "stock": 5
+        "stock": 25,
+        "price": 80
     },
     {
         "code": 11,
         "name": "Drink",
-        "stock": 26,
+        "stock": 21,
         "price": 150
     },
     {
@@ -74,7 +74,7 @@
     {
         "code": "13",
         "name": "Fruit",
-        "price": 100,
-        "stock": 50
+        "stock": 46,
+        "price": 100
     }
 ]

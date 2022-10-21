@@ -1,3 +1,9 @@
+"""
+This program keeps track of all of our purchases
+version : 1.0.0
+Date :06.10.2022
+"""
+
 import json
 from email.message import EmailMessage
 import ssl
@@ -193,6 +199,7 @@ def process_order():
     print("----------------------------------------------")
 
     send_mail()
+    process_order()
     # product quantity decrement
     with open("./json_data/cart.json", "r") as json_file:
         prod_temp = json.load(json_file)
@@ -250,7 +257,6 @@ def process_order():
         cart = []
         with open("./json_data/cart.json", "w") as json_file:
             json.dump(cart, json_file, indent=4)
-    process_order()
 
 
 def create_product_id():
@@ -341,7 +347,7 @@ def send_mail():
                     _________________________________________________
                     Name\t\tQuantity\tPrice\tSubTotal
                     _________________________________________________
-                    {email[i]['name']}\t\t{email[i]['stock']}\t\t{email[i]['Product_Price']}\t{email[i]['Sub-Total']}
+                    {email[i]['name']}\t\t\t{email[i]['stock']}\t\t{email[i]['Product_Price']}\t{email[i]['Sub-Total']}
                     """
             # body += f"\nProduct Name: {email[i]['name']}"
             # body += f"\nProduct Quantity: {email[i]['stock']}"
