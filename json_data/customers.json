@@ -4,5 +4,11 @@
         "name": "Evans",
         "phone": "0723287190",
         "email": "evanskiprotich14@gmail.com"
+    },
+    {
+        "id": 2,
+        "name": "Sharon",
+        "email": "chebesharii@gmail.com",
+        "phone": "0714666666"
     }
 ]

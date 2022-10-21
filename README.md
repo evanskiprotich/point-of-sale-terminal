@@ -7,7 +7,7 @@ A python point of sale CLI terminal System
 - Validate input data(phone number and email)
 - Print a receipt and send either via Email 
 
-## The POS Description
+## Description
 POS Console App is a Command - Line based Point Of Sale System. 
 This program is developed  using Python programming language. 
 It is a single user application meant to operate in a sales store or shops. 
@@ -18,7 +18,7 @@ This program implemented a JSON file to store its file and SMTP for email authen
 
 ## Table of contents
 * [Sprint Deliverables](#Sprint Deliverables)
-* [The POS Description](#The POS Description)
+* [Description](#Description)
 * [Flow Chart](#FLow Chart)
 * [Features](#Features)
 * [Goals](#Goals)
