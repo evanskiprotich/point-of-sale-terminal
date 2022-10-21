@@ -2,7 +2,7 @@
 A python point of sale CLI terminal System
 ## `SEPA Sprint 1` ##
 
-# Sprint Deliverables
+## Sprint Deliverables
 - Develop a POS system using python
 - Validate input data(phone number and email)
 - Print a receipt and send either via Email 
@@ -17,7 +17,7 @@ This program implemented a JSON file to store its file and SMTP for email authen
 
 
 ## Table of contents
-* [Sprint Deliverables] (#Sprint Deliverables)
+* [Sprint Deliverables](#Sprint Deliverables)
 * [The POS Description](#The POS Description)
 * [Flow Chart](#FLow Chart)
 * [Features](#Features)
@@ -37,13 +37,13 @@ A user is able to feed into the system customer data, view available customers, 
 Sample Customer details Format
     ```
         [
-    {
-        "id": 1,
-        "name": "Evan",
-        "phone": "0723287190",
-        "email": "evanskiprotich14@gmail.com"
-    }
-]
+            {
+                "id": 1,
+                "name": "Evan",
+                "phone": "0723287190",
+                "email": "evanskiprotich14@gmail.com"
+            }
+        ]
     ```
 
 ### Product Operations

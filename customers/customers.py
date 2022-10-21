@@ -18,8 +18,8 @@ def view_data():
 
 
 def solve(email):
-    pat = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
-    if re.match(pat, email):
+    pattern = "^[a-zA-Z0-9-_]+@[a-zA-Z0-9]+\.[a-z]{1,3}$"
+    if re.match(pattern, email):
         return True
     return False
 
@@ -232,3 +232,5 @@ def customer():
         elif choice == 6:
             print("Quitting Program.....")
             break
+        else:
+            print("Please Select the correct menu")
